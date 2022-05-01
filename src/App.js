@@ -23,7 +23,7 @@ class App extends React.Component {
 
   fetchTasks(){
     console.log('Fetching....')
-    fetch('http://127.0.0.1:8000/todo/task-list/')
+    fetch('https://djpyapi.herokuapp.com/todo/task-list/')
     .then(response => response.json())
     .then(data =>
       console.log('Data',data))
