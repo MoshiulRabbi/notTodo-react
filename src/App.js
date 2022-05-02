@@ -26,7 +26,9 @@ class App extends React.Component {
     fetch('https://djpyapi.herokuapp.com/todo/task-list/')
     .then(response => response.json())
     .then(data =>
-      console.log('Data',data))
+      this.setState({
+        todoList:data
+      }))
     .catch(err =>{
       console.log(err.message)
     })
@@ -35,6 +37,7 @@ class App extends React.Component {
 
 
   render() {
+    var tasks = this.state.todoList
     return (
       <div className="container">
         
@@ -51,6 +54,29 @@ class App extends React.Component {
                     </div>
                   </div>
                 </form>
+            </div>
+            <div id="list-wrapper">
+              {tasks.map(function(tasks,index){
+                return(
+                    <div key={index} className="task-wrapper flex-wrapper">
+
+
+                      <div style={{flex:7}}>
+                          <span>{tasks.title}</span>
+                      </div>
+
+                      <div style={{flex:1}}>
+                          <button className="btn btn-sm btn-outline-info">Edit</button>
+                      </div>
+
+                      <div style={{flex:1}}>
+                      <button className="btn btn-sm btn-outline-dark delete">Delete</button>
+                      </div>
+
+
+                    </div>
+                )
+              })}
             </div>
         </div>
 
