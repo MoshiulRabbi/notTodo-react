@@ -17,6 +17,7 @@ class App extends React.Component {
       this.fetchTasks = this.fetchTasks.bind(this)
       this.handleValueChange = this.handleValueChange.bind(this)
       this.handleSubmit = this.handleSubmit.bind(this)
+      this.editTask = this.editTask.bind(this)
   };
 
   componentWillMount(){
