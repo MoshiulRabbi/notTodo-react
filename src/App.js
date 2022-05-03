@@ -57,6 +57,15 @@ class App extends React.Component {
 
     var url = 'https://djpyapi.herokuapp.com/todo/task-create/'
 
+
+    if(this.state.editing == true){
+      // Templete literals
+      url = `https://djpyapi.herokuapp.com/todo/task-update/${this.state.activeItem.id}`
+      this.setState({
+        editing:false
+      })
+    }
+
     fetch(url,{
       method:'POST',
       headers:{
@@ -78,10 +87,18 @@ class App extends React.Component {
     })
   }
 
+  editTask(tasks){
+    this.setState({
+      activeItem:tasks,
+      editing:true,
+    })
+
+  }
 
 
   render() {
     var tasks = this.state.todoList
+    var self = this
     return (
       <div className="container">
         
@@ -100,17 +117,17 @@ class App extends React.Component {
                 </form>
             </div>
             <div id="list-wrapper">
-              {tasks.map(function(tasks,index){
+              {tasks.map(function(task,index){
                 return(
                     <div key={index} className="task-wrapper flex-wrapper">
 
 
                       <div style={{flex:7}}>
-                          <span>{tasks.title}</span>
+                          <span>{task.title}</span>
                       </div>
 
                       <div style={{flex:1}}>
-                          <button className="btn btn-sm btn-outline-info">Edit</button>
+                          <button onClick={() => self.editTask(task)} className="btn btn-sm btn-outline-info">Edit</button>
                       </div>
 
                       <div style={{flex:1}}>
