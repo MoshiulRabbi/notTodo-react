@@ -18,6 +18,7 @@ class App extends React.Component {
       this.handleValueChange = this.handleValueChange.bind(this)
       this.handleSubmit = this.handleSubmit.bind(this)
       this.editTask = this.editTask.bind(this)
+      this.deleteTask = this.deleteTask.bind(this)
   };
 
   componentWillMount(){
@@ -97,6 +98,17 @@ class App extends React.Component {
   }
 
 
+  deleteTask(task){
+    fetch(`https://djpyapi.herokuapp.com/todo/task-delete/${task.id}`,{
+      method:'DELETE',
+      headers:{
+        'Content-type':'application/json',
+      },
+    }).then((response) =>{
+      this.fetchTasks()
+    })
+  }
+
   render() {
     var tasks = this.state.todoList
     var self = this
@@ -132,7 +144,7 @@ class App extends React.Component {
                       </div>
 
                       <div style={{flex:1}}>
-                      <button className="btn btn-sm btn-outline-dark delete">Delete</button>
+                      <button onClick={() => self.deleteTask(task)} className="btn btn-sm btn-outline-dark delete">Delete</button>
                       </div>
 
 
