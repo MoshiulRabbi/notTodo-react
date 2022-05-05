@@ -19,6 +19,7 @@ class App extends React.Component {
       this.handleSubmit = this.handleSubmit.bind(this)
       this.editTask = this.editTask.bind(this)
       this.deleteTask = this.deleteTask.bind(this)
+      this.comNocom = this.comNocom.bind(this)
   };
 
   componentWillMount(){
@@ -109,6 +110,30 @@ class App extends React.Component {
     })
   }
 
+
+
+
+  comNocom(task){
+    task.completed = !task.completed
+
+    var url = `https://djpyapi.herokuapp.com/todo/task-update/${task.id}`
+
+    fetch(url,{
+      method:'POST',
+      headers:{
+        'Content-type':'application/json',
+      },
+      body:JSON.stringify({'completed':task.completed,'title':task.title})
+    }).then((response) =>{
+      this.fetchTasks()
+    })
+
+
+
+
+    console.log('Task status',task.completed)
+  }
+
   render() {
     var tasks = this.state.todoList
     var self = this
@@ -134,9 +159,12 @@ class App extends React.Component {
                 return(
                     <div key={index} className="task-wrapper flex-wrapper">
 
-
-                      <div style={{flex:7}}>
+                      <div onClick={() => self.comNocom(task)} style={{flex:7}}>
+                        {task.completed == false ?(
                           <span>{task.title}</span>
+                          ) : (
+                          <strike>{task.title}</strike>
+                      )}
                       </div>
 
                       <div style={{flex:1}}>
